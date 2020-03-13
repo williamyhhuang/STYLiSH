@@ -1,0 +1,38 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - node
+    ports:
+      - 80:80
+  mysql: 
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command:
+      redis-server
+    networks:
+      - webnet
+  node:
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    # depends_on:
+    #   - mysql
+    #   - redis
+    environment:
+      redis_server_addr: redis 
+    command:
+      node app.js
+    networks:
+      - webnet
+networks:
+  webnet:

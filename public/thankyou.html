@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="admin/style.css" rel="stylesheet">
+    <title>Thank you for buying!</title>
+</head>
+
+<body>
+    <div class='base'>
+        <div class='bar'>
+            <img class='logo' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/logo.png' onclick="redirect()">
+            <div class='catagory'>
+                <div class='cat' id='women'>女裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='men'>男裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='acce'>配件</div>
+            </div>
+            <div class='right'>
+                <div class='search'>
+                    <img id='search' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/search.png'>
+                </div>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/btn-shopping-cart-01-add.png'>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/member.png' onclick="redirect_profile()">
+            </div>
+        </div>
+    </div>
+    <div class='head'></div>
+    <div class='main_thank'>
+        <div id=result_thank>
+            <p>Thank you for buying!</p>
+        </div>
+    </div>
+    <footer class='footer'>
+        <div id='footer_content'>
+            <div class='footer_search'>
+                <div class='set_buttom' id='stylish'>關於Stylish</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>服務條款</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>隱私政策</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>聯絡我們</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>FAQ</div>
+            </div>
+            <div class='footer_icon'>
+                <img id='line' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/line.png'>
+                <img id='twitter' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/twitter.png'>
+                <img id='fb' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/facebook.png'>
+            </div>
+            <div class='rights'>&copy;2018. All rights reserved</div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script>
+        function redirect_profile() {
+            let host = location.host;
+            window.location = `https://${host}/profile.html`;
+        }
+
+        number = Cookies.get('order_id');
+        let result = document.getElementById('result_thank');
+        let text = document.createTextNode('Your Order ID is : ' + String(number));
+        result.appendChild(text);
+
+        function redirect() {
+            let host = location.host;
+            window.location = `https://${host}/index.html`;
+        }
+    </script>
+    <script src="../scripts/catagory.js"></script>
+</body>
+
+</html>

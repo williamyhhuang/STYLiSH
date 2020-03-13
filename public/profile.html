@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="admin/style.css" rel="stylesheet">
+    <title>Profile</title>
+</head>
+
+<body>
+    <div class='base'>
+        <div class='bar'>
+            <img class='logo' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/logo.png' onclick="redirect()">
+            <div class='catagory'>
+                <div class='cat' id='women'>女裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='men'>男裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='acce'>配件</div>
+            </div>
+            <div class='right'>
+                <div class='search'>
+                    <img id='search' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/search.png'>
+                </div>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/btn-shopping-cart-01-add.png'>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/member.png' onclick="redirect_profile()">
+            </div>
+        </div>
+    </div>
+    <div class='head'></div>
+    <div class='main_profile'>
+        <div id=result>
+        </div>
+        <div id=data>
+        </div>
+    </div>
+    <footer class='footer'>
+        <div id='footer_content'>
+            <div class='footer_search'>
+                <div class='set_buttom' id='stylish'>關於Stylish</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>服務條款</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>隱私政策</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>聯絡我們</div>
+                <div class='footer_bar'>|</div>
+                <div class='set_buttom'>FAQ</div>
+            </div>
+            <div class='footer_icon'>
+                <img id='line' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/line.png'>
+                <img id='twitter' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/twitter.png'>
+                <img id='fb' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/facebook.png'>
+            </div>
+            <div class='rights'>&copy;2018. All rights reserved</div>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script async='' , defer='' , src='https://connect.facebook.net/en_US/sdk.js'></script>
+    <script>
+        function redirect() {
+            let host = location.host;
+            window.location = `https://${host}/index.html`;
+        }
+
+
+
+        //確認是否有會員token
+        let cookie = document.cookie;
+        // if (){
+
+        // }
+    </script>
+    <script>
+
+        function redirect_profile() {
+            let host = location.host;
+            window.location = `https://${host}/profile.html`;
+        }
+
+        let host = location.host;
+        let token = Cookies.get('token');
+        if (token == null) {
+            fetch('./scripts/signIn.txt')
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (data) {
+                    document.getElementById('result').innerHTML = data;
+                })
+        } else {
+            $.ajax({
+                url: 'api/1.0/user/profile',
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                success: function (index) {
+                    if (typeof (index) == 'string') {
+                        alert(index);
+                        document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+                        window.location = `https://${host}/profile.html`;
+                    } else {
+                        let name = document.createTextNode('Welcome, ' + index.data.name);
+                        let email = document.createTextNode('Your Email is : ' + index.data.email);
+                        let data_div = document.getElementById('data');
+                        let name_div = document.createElement('div');
+                        let email_div = document.createElement('div');
+                        name_div.appendChild(name);
+                        email_div.appendChild(email);
+                        data_div.appendChild(name_div);
+                        data_div.appendChild(email_div);
+                    }
+                },
+                error: function (index) {
+                    alert('error from getting to profile')
+                }
+            })
+        }
+
+    </script>
+
+    <!-- 一般註冊/登入 -->
+    <script>
+        function signUp() {
+            let data = {
+                name: document.getElementById('up_name').value,
+                email: document.getElementById('up_email').value,
+                password: document.getElementById('up_password').value
+            }
+
+            let index = JSON.stringify(data);
+
+            $.ajax({
+                url: 'api/1.0/user/signup',
+                data: index,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                success: function (data) {
+                    console.log('signup data',data)
+                    if (typeof (data) == 'string') {
+                        alert(data);
+                    } else {
+                        document.cookie = `token=${data.data.access_token}`
+                        window.location = `https://${host}/profile.html`
+                    }
+                },
+                error: function () {
+                    alert('Error from sign-up!')
+                }
+            })
+        }
+
+        function signIn() {
+
+            let data = {
+                email: document.getElementById('in_email').value,
+                password: document.getElementById('in_password').value,
+                provider: 'native'
+            }
+
+            index = JSON.stringify(data);
+
+            $.ajax({
+                url: 'api/1.0/user/signin',
+                data: index,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                success: function (data) {
+                    if (typeof (data) == 'string') {
+                        alert(data);
+                    } else {
+                        document.cookie = `token=${data.data.access_token}`
+                        window.location = `https://${host}/profile.html`
+                    }
+                },
+                error: function () {
+                    alert('Error from sign-in!')
+                }
+            })
+        }
+
+    </script>
+    <!-- 臉書登入 -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2728135897242432',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+        };
+
+        var person = {};
+        function login() {
+            FB.login(function (response) {
+                if (response.status == 'connected') {
+
+                    fbToken = response.authResponse.accessToken;
+                    person = {
+                        fbToken: fbToken,
+                        provider: "facebook"
+                    }
+
+                    $.ajax({
+                        url: '../api/1.0/user/signin',
+                        method: "POST",
+                        data: person,
+                        // datatype: 'text',
+                        success: function (data) {
+                            if (typeof (data) == 'string') {
+                                alert(data);
+                            } else {
+                                document.cookie = `token=${data.data.access_token}`
+                                window.location = `https://${host}/profile.html`
+                            }
+                        },
+                        error: function () {
+                            alert('Error from FB sign-in!')
+                        }
+                    })
+                }
+            });
+        }
+    </script>
+    <script src="../scripts/catagory.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        //- meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Week_1_Part_5
+    body
+        h1 Here is Week_1_Part_5
+        h2 Please sign in
+        form(action="/api/1.0/user/signIn", method="post")
+            label(for="email") Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+                input(type='text' name='email' palceholder="email")
+            br
+            label(for="password") Password :
+                input(type='text' name='password')
+            button(type='submit') Sign in
+        input(type='button', onclick='login()', value='Continue with Facebook' style='color:white; background-color:blue; border-radius:5px' )
+        br
+        <div class="general_login_info"></div>
+
+        //- input(type='button', onclick='logout()', value='log out with FB')
+
+    script.
+        window.fbAsyncInit = function() {
+        FB.init({
+        appId            : '2728135897242432',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.1'
+        });
+        };
+
+    script(async='', defer='', src='https://connect.facebook.net/en_US/sdk.js')
+    script(src='http://code.jquery.com/jquery-3.4.1.min.js')
+    
+    script.
+        var person={}; 
+        function login(){
+            FB.login(function(response) {
+                if (response.status == 'connected'){
+
+                    fbToken = response.authResponse.accessToken;
+                    person = {
+                        fbToken: fbToken,
+                        provider: "facebook"
+                    }
+
+                    $.ajax({
+                        url:'../user/signIn',
+                        method:"POST",
+                        data: person,
+                        datatype: 'text',
+                        success: function(){
+                            window.location = "../user/signin";                            
+                        },
+                        error: function(){
+                            alert('error');
+                        }
+                    })
+                }
+            });
+        }
+
+
+        //- function native(){
+        //-     const email = document.querySelector('.email').value;
+        //-     const password = document.querySelector('.password').value;
+        //-     $.ajax({
+        //-         url:'../user/signIn',
+        //-         method:"POST",
+        //-         data:{
+        //-             email:email,
+        //-             password:password,
+        //-             provider:'native'
+        //-         },
+        //-         datatype: 'text',
+        //-     })
+
+        //- }
+
+

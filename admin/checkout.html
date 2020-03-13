@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout Page</title>
+</head>
+
+<body>
+    <style>
+        .tpfield {
+            height: 40px;
+            width: 300px;
+            border: 1px solid gray;
+            margin: 5px 0;
+            padding: 5px;
+        }
+    </style>
+    <script src="https://js.tappaysdk.com/tpdirect/v4"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+    <h3 style="font-weight:bolder">商品資料</h3>
+    <hr>
+    <h3>商品編號</h3>
+    <input type="text" class="tpfield" name="id" id="id">
+    <h3>商品名稱</h3>
+    <input type="text" class="tpfield" name="product_name" id="product_name">
+    <h3>價格</h3>
+    <input type="text" class="tpfield" name="price" id="price">
+    <h3>顏色</h3>
+    <input type="text" class="tpfield" name="color" id="color" placeholder="yellow,green,red">
+    <h3>尺寸</h3>
+    <input type="text" class="tpfield" name="size" id="size" placeholder="S,M,L">
+    <h3>數量</h3>
+    <input type="text" class="tpfield" name="qty" id="qty"><br>
+    <h3 style="font-weight:bolder">收件資料</h3>
+    <hr>
+    <h3>收件人姓名</h3>
+    <input type="text" class="tpfield" name="name" id="name">
+    <h3>Email</h3>
+    <input type="text" class="tpfield" name="email" id="email">
+    <h3>手機號碼</h3>
+    <input type="text" class="tpfield" name="phone" id="phone">
+    <h3>收件地址</h3>
+    <input type="text" class="tpfield" name="address" id="address">
+    <h3>配送時間</h3>
+    <input type="radio" id="time1" value="morning">08:00-12:00
+    <input type="radio" id="time2" value="afternoon">14:00-18:00
+    <input type="radio" id="time3" value="none">不指定 <br><br>
+    <h3 style="font-weight:bolder">付款資料</h3>
+    <hr>
+    <h3>VISA卡號</h3>
+    <div class="tpfield" id="cardnumber"></div>
+    <h3>卡片到期日</h3>
+    <div class="tpfield" id="cardexpirationdate"></div>
+    <h3>卡片後三碼</h3>
+    <div class="tpfield" id="cardccv"></div>
+    <button type=‘submit' onclick="onSubmit()">確認送出</button>
+    <script>
+
+        var app_id = 12348;
+        var app_key = 'app_pa1pQcKoY22IlnSXq5m5WP5jFKzoRG58VEXpT7wU62ud7mMbDOGzCYIlzzLF';
+
+        TPDirect.setupSDK(12348, 'app_pa1pQcKoY22IlnSXq5m5WP5jFKzoRG58VEXpT7wU62ud7mMbDOGzCYIlzzLF', 'sandbox')
+
+        // Display ccv fieldÓ
+        let fields = {
+            number: {
+                // css selector
+                element: '#cardnumber',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                // DOM object
+                element: document.getElementById('cardexpirationdate'),
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: '#cardccv',
+                placeholder: 'ccv'
+            }
+        }
+        TPDirect.card.setup({
+
+            fields: fields,
+            styles: {
+                // Style all elements
+                'input': {
+                    'color': 'gray'
+                },
+                // Styling ccv field
+                'input.ccv': {
+                    // 'font-size': '16px'
+                },
+                // Styling expiration-date field
+                'input.expirationdate': {
+                    // 'font-size': '16px'
+                },
+                // Styling card-number field
+                'input.cardnumber': {
+                    // 'font-size': '16px'
+                },
+                // style focus state
+                ':focus': {
+                    // 'color': 'black'
+                },
+                // style valid state
+                '.valid': {
+                    'color': 'green'
+                },
+                // style invalid state
+                '.invalid': {
+                    'color': 'red'
+                },
+                // Media queries
+                // Note that these apply to the iframe, not the root window.
+                '@media screen and (max-width: 400px)': {
+                    'input': {
+                        'color': 'orange'
+                    }
+                }
+            }
+        })
+
+        TPDirect.card.getTappayFieldsStatus()
+
+        // call TPDirect.card.getPrime when user submit form to get tappay prime
+        // $('form').on('submit', onSubmit)
+
+        function onSubmit(event) {
+            // event.preventDefault()
+
+            // 取得 TapPay Fields 的 status
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+
+            // 確認是否可以 getPrime
+            if (tappayStatus.canGetPrime === false) {
+                alert('can not get prime')
+                return
+            }
+
+            // Get prime
+            TPDirect.card.getPrime((result) => {
+                if (result.status !== 0) {
+                    alert('get prime error ' + result.msg)
+                    return
+                } else {
+                    // alert('get prime 成功，prime: ' + result.card.prime)
+                    var id = document.getElementById('id').value;
+                    var product_name = document.getElementById('product_name').value;
+                    var price = document.getElementById('price').value;
+                    var colors = document.getElementById('color').value;
+                    var color_code;
+                    var sizes = document.getElementById('size').value;
+                    var qty = document.getElementById('qty').value;
+                    var user_name = document.getElementById('name').value;
+                    var email = document.getElementById('email').value;
+                    var phone = document.getElementById('phone').value;
+                    var address = document.getElementById('address').value;
+                    var time;
+                    var time1 = document.getElementById('time1');
+                    var time2 = document.getElementById('time2');
+                    var time3 = document.getElementById('time3');
+
+                    //確認寄送時間
+                    if (time1.checked) {
+                        time = time1.value;
+                    } else if (time2.checked) {
+                        time = time2.value;
+                    } else {
+                        time = time3.value;
+                    }
+
+                    id = id.split(',');
+                    originColor = colors.split(',');
+                    colors = colors.split(',');
+                    product_name = product_name.split(',');
+                    price = price.split(',');
+                    sizes = sizes.split(',');
+                    qty = qty.split(',');
+                    var colors_transfer = [];
+
+                    for (var i = 0; i < colors.length; i++) {
+                        switch (colors[i]) {
+                            case 'yellow':
+                                colors[i] = '#FFFF00';
+                                break;
+                            case 'green':
+                                colors[i] = '#008000';
+                                break;
+                            case 'red':
+                                colors[i] = '#FF0000'
+                        }
+                        colors_transfer.push(colors[i]);
+                    }
+
+                    var product_each = [];
+
+                    for (var i=0; i<colors.length; i++){
+                        var product = {
+                            id:id[i],
+                            name:product_name[i],
+                            price:price[i],
+                            color:{
+                                code:colors_transfer[i],
+                                color:originColor[i]
+                            },
+                            size: sizes[i],
+                            qty: qty[i]
+                        }
+                        product_each.push(product)
+                    }
+
+                    var price_each = product_each.map(el=>el.price);
+                    var qty_each = product_each.map(el=>el.qty);
+ 
+                    var subtotal=[];
+                    var total;
+                    var freight = 60;
+                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+                    for (var i = 0; i<price_each.length;i++){
+                        subtotal[i] = price_each[i] * qty_each[i]; 
+                    }
+                    subtotal = subtotal.reduce(reducer);
+                    total = subtotal + freight;
+
+                    var shipping = 'delivery';
+                    var payment = 'credit_card';
+
+                    var data = {
+                        prime: result.card.prime,
+                        order: {
+                            shipping: shipping,
+                            payment: payment,
+                            subtotal: subtotal,
+                            freight: freight,
+                            total: total,
+                            recipient: {
+                                name: user_name,
+                                phone: phone,
+                                email: email,
+                                address: address,
+                                time: time
+                            },
+                            list: product_each
+                        }
+                    };
+
+                    data = JSON.stringify(data);
+
+                    $.ajax({
+                        url: '../order/checkout',
+                        data: data,
+                        // dataType: 'json',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        success: function(data){
+                            alert(data);
+                        },
+                        error: function(){
+                            alert('error')
+                        }
+                    })
+                }
+
+                // send prime to your server, to pay with Pay by Prime API .
+                // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+            })
+        }
+
+    </script>
+
+
+</body>
+
+</html>

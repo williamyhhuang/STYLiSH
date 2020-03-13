@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="admin/style.css" rel="stylesheet">
+    <title>the final test for jenkins</title>
+</head>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<body>
+    <div class='base'>
+        <div class='bar'>
+            <img class='logo' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/logo.png' onclick="redirect()">
+            <div class='catagory'>
+                <!-- <a href='http://localhost:3000/index.html?catagory=women'> -->
+                    <div class='cat' id='women'>女裝</div>
+                <!-- </a> -->
+                <div class='header_bar'>|</div>
+                <div class='cat' id='men'>男裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='acce' ">配件</div>
+            </div>
+            <div class='right'>
+                <div class='search'>
+                    <img id='search' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/search.png'>
+                </div>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/btn-shopping-cart-01-add.png'>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/member.png' onclick=" redirect_profile()">
+                </div>
+            </div>
+        </div>
+        <div class='head'></div>
+        <div class='head_pic'><img src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/201807242228.jpg'></div>
+        <div class='main'></div>
+        <footer class='footer'>
+            <div id='footer_content'>
+                <div class='footer_search'>
+                    <div class='set_buttom' id='stylish'>關於Stylish</div>
+                    <div class='footer_bar'>|</div>
+                    <div class='set_buttom'>服務條款</div>
+                    <div class='footer_bar'>|</div>
+                    <div class='set_buttom'>隱私政策</div>
+                    <div class='footer_bar'>|</div>
+                    <div class='set_buttom'>聯絡我們</div>
+                    <div class='footer_bar'>|</div>
+                    <div class='set_buttom'>FAQ</div>
+                </div>
+                <div class='footer_icon'>
+                    <img id='line' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/line.png'>
+                    <img id='twitter' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/twitter.png'>
+                    <img id='fb' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/facebook.png'>
+                </div>
+                <div class='rights'>&copy;2018. All rights reserved</div>
+            </div>
+        </footer>
+</body>
+<script src="../scripts/catagory.js"></script>
+<script>
+    document.cookie = 'x=3';
+    $(window).scroll(function () {
+        last = $("body").height() - $(window).height()
+        if ($(window).scrollTop() >= last) {
+            let y = Number(Cookies.get('x'));
+            // add(y); 
+            window.setTimeout(add(y), 20000)
+            y = y + 3;
+            document.cookie = `x='${y}'`;
+        }
+    })
+</script>
+
+</html>

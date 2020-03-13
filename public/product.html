@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="admin/style.css" rel="stylesheet">
+    <title>Product Page</title>
+</head>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v4"></script>
+<script>
+
+    function img_create(src) {
+        var img = new Image();
+        img.src = src;
+        return img;
+    }
+
+    let getData = async () => {
+        try {
+
+            let id;
+            let url = new URLSearchParams(location.href);
+            let host = location.host;
+            for (let [key, value] of url.entries()) {
+                id = value;
+            }
+
+            console.log(host);
+
+            let data_fetch = await fetch(`https://${host}/products/details?id=${id}`, { method: 'GET' })
+                .then(response => { return response.json() })
+                .then(data => {
+                    return data.data;
+                })
+            // console.log(data_fetch);
+
+            //商品上半部
+            //創建各個div
+            let product_main_img_div = document.getElementById('product_main_img');
+            let product_name_div = document.getElementById('product_name');
+            let product_id_div = document.getElementById('product_id');
+            let product_price_div = document.getElementById('product_price');
+            let product_texture_div = document.getElementById('product_texure');
+            let product_place_div = document.getElementById('product_place');
+
+            //將值塞進各個div
+            let main_img = img_create(data_fetch.main_image[0])
+            let name = document.createTextNode(data_fetch.title);
+            let price = document.createTextNode('TWD. ' + data_fetch.price);
+            let product_id = document.createTextNode(data_fetch.id);
+            let texture = document.createTextNode('材質： ' + String(data_fetch.texture));
+            let place = document.createTextNode('產地： ' + String(data_fetch.place));
+
+            product_main_img_div.appendChild(main_img);
+            product_name_div.appendChild(name);
+            product_id_div.appendChild(product_id);
+            product_price_div.appendChild(price);
+            product_texture_div.appendChild(texture);
+            product_place_div.appendChild(place);
+            let product_size_div = document.getElementById('product_size');
+            for (let i = 0; i < data_fetch.size.length; i++) {
+                let size_i = document.createElement('div');
+                size_i.className = 'size_i';
+                let size = document.createTextNode(data_fetch.size[i]);
+                size_i.appendChild(size);
+                product_size_div.appendChild(size_i);
+            }
+
+            let product_color_div = document.getElementById('product_color');
+            for (let i = 0; i < data_fetch.color.length; i++) {
+                let color_i = document.createElement('div');
+                color_i.className = 'color_i';
+                color_i.value = data_fetch.color[i].name;
+                // color_i.value = data_fetch.color[i].color_code;
+                color_i.style.backgroundColor = data_fetch.color[i].color_code;
+                product_color_div.appendChild(color_i);
+            }
+
+            //商品下半部
+            let product_bot = document.getElementById('product_bot');
+            for (let i = 0; i < 2; i++) {
+                let product_story_div = document.createElement('div');
+                product_story_div.className = 'product_story';
+                let product_images_div = document.createElement('div');
+                product_images_div.className = 'product_images';
+                let product_story = document.createTextNode(data_fetch.story);
+                let product_images = img_create(data_fetch.images[i]);
+                product_story_div.appendChild(product_story);
+                product_images_div.appendChild(product_images);
+                product_bot.appendChild(product_story_div);
+                product_bot.appendChild(product_images_div);
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    getData();
+
+    function redirect_profile() {
+        let host = location.host;
+        window.location = `https://${host}/profile.html`;
+    }
+
+</script>
+
+<body>
+    <div class='base'>
+        <div class='bar'>
+                <img class='logo' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/logo.png' onclick="redirect()">
+            <div class='catagory'>
+                <div class='cat' id='women'>女裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='men'>男裝</div>
+                <div class='header_bar'>|</div>
+                <div class='cat' id='acce'>配件</div>
+            </div>
+            <div class='right'>
+                <div class='search'>
+                    <img id='search' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/search.png'>
+                </div>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/btn-shopping-cart-01-add.png'>
+                <img class='icon' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/member.png' onclick="redirect_profile()">
+            </div>
+        </div>
+    </div>
+    <div class='head'></div>
+    <div class='main_product'>
+        <div id='product_top'>
+            <div id='product_main_img'></div>
+            <div id='product_details'>
+                <div id='product_name'></div>
+                <div id='product_id'></div>
+                <div id='product_price'></div>
+                <hr>
+                <div id='product_color'>
+                    <p>顏色</p>
+                    <p class='sl'>|</p>
+                </div>
+                <div id='product_size'>
+                    <p>尺寸</p>
+                    <p class='sl'>|</p>
+                </div>
+                <div id='product_number'>
+                    <p>數量</p>
+                    <p class='sl'>|</p>
+                    <div id='product_number_bar'>
+                        <div style="margin-left:10px" id='number_minus' onclick="del()">-</div>
+                        <div id='number'>1</div>
+                        <div style="margin-right:10px" id='number_plus' onclick="add()">+</div>
+                    </div>
+                </div>
+                <div id='product_cart'>
+                    <p id='product_cart_p'>沒有購物車 直接結帳</p>
+                </div>
+                <div id='product_des_container'>
+                    <div id='product_des'>*實品顏色依單品照為主</div>
+                    <div id='product_texure'></div>
+                    <div id='product_place'></div>
+                </div>
+            </div>
+        </div>
+
+            <div id='product_mid'>
+                <p id='product_mid_des'>付款資訊</p>
+                <hr id='product_mid_hr'>
+            </div>
+            <div>
+            <div id='pay'>
+                <h3>VISA卡號</h3>
+                <div class="tpfield" id="cardnumber"></div>
+                <h3>卡片到期日</h3>
+                <div class="tpfield" id="cardexpirationdate"></div>
+                <h3>卡片後三碼</h3>
+                <div class="tpfield" id="cardccv" style="margin-bottom:28px;"></div>
+                <button id='checkout' onclick="onSubmit()"><p>結帳去</p></button>
+            </div>
+        </div>
+        <div id='product_mid'>
+            <p id='product_mid_des'>細部說明</p>
+            <hr id='product_mid_hr'>
+        </div>
+        <div id='product_bot'>
+        </div>
+    </div>
+    <footer class='footer'>
+        <div id='footer_content'>
+        <div class='footer_search'>
+            <div class='set_buttom' id='stylish'>關於Stylish</div>
+            <div class='footer_bar'>|</div>
+            <div class='set_buttom'>服務條款</div>
+            <div class='footer_bar'>|</div>
+            <div class='set_buttom'>隱私政策</div>
+            <div class='footer_bar'>|</div>
+            <div class='set_buttom'>聯絡我們</div>
+            <div class='footer_bar'>|</div>
+            <div class='set_buttom'>FAQ</div>
+        </div>
+        <div class='footer_icon'>
+            <img id='line' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/line.png'>
+            <img id='twitter' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/twitter.png'>
+            <img id='fb' src='https://williamyhhuang-stylish.s3.ap-northeast-2.amazonaws.com/index_images/facebook.png'>
+        </div>
+        <div class='rights'>&copy;2018. All rights reserved</div>
+    </div>
+    </footer>
+    <script src='../scripts/TapPay.js'></script>
+    <script src="../scripts/catagory.js"></script>
+    <script>
+        function redirect (){
+            let host = location.host;
+            window.location = `https://${host}/index.html`;
+        }
+
+        function del() {
+            var num = parseInt($('#number').text()) - 1;
+            if (num < 1) {
+                $('#number').text(1);
+            } else {
+                $('#number').text(num);
+            }
+        }
+        function add() {
+            var num = parseInt($('#number').text()) + 1;
+            $('#number').text(num);
+        }
+    </script>
+</body>
+
+</html>

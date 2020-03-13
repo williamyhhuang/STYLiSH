@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <link href="style.css" rel="stylesheet">
+        <title>Week_0_part_3</title>
+    </head>
+
+    <body>
+        <h1>Week-0 Part-3 Product Management</h1>
+        <h2>Please enter the following information:</h2>
+        <div class="enter">
+            <form action="/product" method="post" enctype="multipart/form-data">
+                <div class="group">
+                    <label>ID :</label>
+                    <input type='text' name='id' id='id' required>
+                </div>
+                    <br>
+                <div class="group">
+                    <label>title :</label>
+                    <input type='text' name='title' id='title' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>description : </label>
+                    <input type='text' name='description' id='description' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>price : </label>
+                    <input type='text' name='price' id='price' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>texture : </label>
+                    <input type='text' name='texture' id='texture' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>wash : </label>
+                    <input type='text' name='wash' id='wash' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>place : </label>
+                    <input type='text' name='place' id='place' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>note : </label>
+                    <input type='text' name='note' id='note' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>catagory : </label>
+                    <input type='text' name='catagory' id='catagory'  placeholder="男裝,女裝,配件" required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>story : </label>
+                    <input type='text' name='story' id='story' required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>colors : </label> 
+                    <input type='text' name='colors' id='colors' placeholder="yellow,green,red" required>
+                    <br>
+                </div>
+                <div class="group">
+                    <label>sizes : </label> 
+                    <input type='text' name='sizes' id='s' placeholder="S,M,L" required> 
+                    <br>
+                </div>
+                <div class="group">
+                    <label>stock : </label>
+                    <input type='text' name='stock' id='stock' placeholder="100,200,300" required>
+                    <br>
+                </div>
+                <div class="group">
+                    <p>Main image</p>
+                    <input type="file" name="single" required>
+                </div>
+                <div class="group">
+                    <p>Other images</p>
+                    <input type="file" name="multiple" multiple required>
+                    <br>
+                </div>
+                <button type='submit'>Submit</button>
+            </form>
+        </div> 
+    </body>
+</html>
