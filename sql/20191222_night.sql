@@ -36,7 +36,7 @@ CREATE TABLE `campaign_images` (
 
 LOCK TABLES `campaign_images` WRITE;
 /*!40000 ALTER TABLE `campaign_images` DISABLE KEYS */;
-INSERT INTO `campaign_images` VALUES (5,111,'http://localhost:3001/uploads_campaign/campaign_images-1577020800714.jpg'),(6,222,'http://localhost:3001/uploads_campaign/campaign_images-1577020810718.jpg');
+INSERT INTO `campaign_images` VALUES (5,111,'https://williamyhhuang.com/uploads_campaign/campaign_images-1577020800714.jpg'),(6,222,'https://williamyhhuang.com/uploads_campaign/campaign_images-1577020810718.jpg');
 /*!40000 ALTER TABLE `campaign_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `images` (
 
 LOCK TABLES `images` WRITE;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` VALUES (1,'111','http://localhost:3001/uploads/multiple-1577019321779.jpg'),(2,'111','http://localhost:3001/uploads/multiple-1577019321779.jpg'),(3,'222','http://localhost:3001/uploads/multiple-1577019510893.jpg'),(4,'222','http://localhost:3001/uploads/multiple-1577019510896.jpg'),(5,'333','http://localhost:3001/uploads/multiple-1577019543674.jpg'),(6,'333','http://localhost:3001/uploads/multiple-1577019543674.jpg'),(7,'444','http://localhost:3001/uploads/multiple-1577019578929.jpg'),(8,'444','http://localhost:3001/uploads/multiple-1577019578929.jpg'),(9,'555','http://localhost:3001/uploads/multiple-1577019955631.jpg'),(10,'555','http://localhost:3001/uploads/multiple-1577019955633.jpg'),(11,'666','http://localhost:3001/uploads/multiple-1577019984833.jpg'),(12,'666','http://localhost:3001/uploads/multiple-1577019984835.jpg');
+INSERT INTO `images` VALUES (1,'111','https://williamyhhuang.com/uploads/multiple-1577019321779.jpg'),(2,'111','https://williamyhhuang.com/uploads/multiple-1577019321779.jpg'),(3,'222','https://williamyhhuang.com/uploads/multiple-1577019510893.jpg'),(4,'222','https://williamyhhuang.com/uploads/multiple-1577019510896.jpg'),(5,'333','https://williamyhhuang.com/uploads/multiple-1577019543674.jpg'),(6,'333','https://williamyhhuang.com/uploads/multiple-1577019543674.jpg'),(7,'444','https://williamyhhuang.com/uploads/multiple-1577019578929.jpg'),(8,'444','https://williamyhhuang.com/uploads/multiple-1577019578929.jpg'),(9,'555','https://williamyhhuang.com/uploads/multiple-1577019955631.jpg'),(10,'555','https://williamyhhuang.com/uploads/multiple-1577019955633.jpg'),(11,'666','https://williamyhhuang.com/uploads/multiple-1577019984833.jpg'),(12,'666','https://williamyhhuang.com/uploads/multiple-1577019984835.jpg');
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +143,7 @@ CREATE TABLE `main_image` (
 
 LOCK TABLES `main_image` WRITE;
 /*!40000 ALTER TABLE `main_image` DISABLE KEYS */;
-INSERT INTO `main_image` VALUES (1,'111','http://localhost:3001/uploads/single-1577019321776.jpg'),(2,'222','http://localhost:3001/uploads/single-1577019510892.jpg'),(3,'333','http://localhost:3001/uploads/single-1577019543671.jpg'),(4,'444','http://localhost:3001/uploads/single-1577019578928.jpg'),(5,'555','http://localhost:3001/uploads/single-1577019955629.jpg'),(6,'666','http://localhost:3001/uploads/single-1577019984831.jpg');
+INSERT INTO `main_image` VALUES (1,'111','https://williamyhhuang.com/uploads/single-1577019321776.jpg'),(2,'222','https://williamyhhuang.com/uploads/single-1577019510892.jpg'),(3,'333','https://williamyhhuang.com/uploads/single-1577019543671.jpg'),(4,'444','https://williamyhhuang.com/uploads/single-1577019578928.jpg'),(5,'555','https://williamyhhuang.com/uploads/single-1577019955629.jpg'),(6,'666','https://williamyhhuang.com/uploads/single-1577019984831.jpg');
 /*!40000 ALTER TABLE `main_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
