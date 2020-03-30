@@ -30,7 +30,7 @@
 
             console.log(host);
 
-            let data_fetch = await fetch(`https://${host}/products/details?id=${id}`, { method: 'GET' })
+            let data_fetch = await fetch(`${location.protocol}//${host}/products/details?id=${id}`, { method: 'GET' })
                 .then(response => { return response.json() })
                 .then(data => {
                     return data.data;
@@ -103,7 +103,7 @@
 
     function redirect_profile() {
         let host = location.host;
-        window.location = `https://${host}/profile.html`;
+        window.location = `${location.protocol}//${host}/profile.html`;
     }
 
 </script>
@@ -213,7 +213,7 @@
     <script>
         function redirect (){
             let host = location.host;
-            window.location = `https://${host}/index.html`;
+            window.location = `${location.protocol}//${host}/index.html`;
         }
 
         function del() {

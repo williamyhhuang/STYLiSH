@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.set('view engine', 'pug');
 
@@ -61,5 +61,5 @@ app.use('/order/checkout', checkOutRoutes);
 // app.use('/s3', s3Routes);
 
 app.listen(port, () => {
-  console.log('The frontend server is running on port 3000!');
+  console.log('stylish is running on port 3001!');
 });

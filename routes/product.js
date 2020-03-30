@@ -3,6 +3,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable new-cap */
 /* eslint-disable max-len */
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
@@ -14,7 +15,10 @@ const aws = require('aws-sdk');
 const awsCred = require('../scripts/aws_credential');
 const s3 = new aws.S3(awsCred);
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
 const dbInsert = require('./product/product_db');
 const func = require('./product/product_func');
 

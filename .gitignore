@@ -1,8 +1,8 @@
 # AWS credential
-scripts/aws_credential.js
+# scripts/aws_credential.js
 
 # MySQL config
-scripts/mysql.js
+# scripts/mysql.js
 
 # node modules
 node_modules

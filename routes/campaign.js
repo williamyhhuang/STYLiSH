@@ -1,6 +1,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable new-cap */
 /* eslint-disable max-len */
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -10,7 +11,10 @@ const aws = require('aws-sdk');
 const awsCred = require('../scripts/aws_credential');
 const s3 = new aws.S3(awsCred);
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
 const func = require('./campaign/campaign_func');
 const dbQuery = require('./campaign/campaign_db');
 

@@ -7,18 +7,18 @@ function img_create(src) {
 
 function redirect() {
   const host = location.host;
-  window.location = `https://${host}/index.html`;
+  window.location = `${location.protocol}//${host}/index.html`;
 }
 
 function redirect_profile() {
   const host = location.host;
-  window.location = `https://${host}/profile.html`;
+  window.location = `${location.protocol}//${host}/profile.html`;
 }
 
 function click_men() {
   const host = location.host;
   document.getElementById('men').addEventListener('click', function() {
-    window.location = `https://${host}/index.html?catagory=men`;
+    window.location = `${location.protocol}//${host}/index.html?catagory=men`;
   });
 }
 click_men();
@@ -26,7 +26,7 @@ click_men();
 function click_women() {
   const host = location.host;
   document.getElementById('women').addEventListener('click', function() {
-    window.location = `https://${host}/index.html?catagory=women`;
+    window.location = `${location.protocol}//${host}/index.html?catagory=women`;
   });
 }
 click_women();
@@ -34,7 +34,7 @@ click_women();
 function click_acce() {
   const host = location.host;
   document.getElementById('acce').addEventListener('click', function() {
-    window.location = `https://${host}/index.html?catagory=accessories`;
+    window.location = `${location.protocol}//${host}/index.html?catagory=accessories`;
   });
 }
 click_acce();
@@ -42,7 +42,7 @@ click_acce();
 
 function women() {
   const host = location.host;
-  window.location = `http://${host}/index.html?catagory=women`;
+  window.location = `${location.protocol}//${host}/index.html?catagory=women`;
   const url = new URL(window.location.href);
   console.log(url.searchParams.get('catagory'));
   // document.getElementsByClassName('main').innerHTML="";
@@ -50,15 +50,13 @@ function women() {
   const getData = async () => {
     try {
       for (let i = 0; i < 3; i++) {
-        const data_fetch = await fetch(`http://${host}/products/women?paging=${i}`, { method: 'GET' })
+        const data_fetch = await fetch(`${location.protocol}//${host}/products/women?paging=${i}`, { method: 'GET' })
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             return data.data;
           });
-
-        console.log(`http://3.19.121.116/products/women?paging=${i}`);
 
         for (let j = 0; j < 2; j++) {
           const id = data_fetch[j].id;
@@ -91,7 +89,7 @@ function women() {
 
           // 塞連結進圖片裡
           const img_a = document.createElement('a');
-          img_a.href = `http://${host}/product.html?id=${id}`;
+          img_a.href = `${location.protocol}//${host}/product.html?id=${id}`;
           img_a.appendChild(pic);
 
           name_div.appendChild(name);
@@ -128,15 +126,13 @@ function men() {
       const host = location.host;
 
       for (let i = 0; i < 3; i++) {
-        const data_fetch = await fetch(`http://${host}/products/men?paging=${i}`, { method: 'GET' })
+        const data_fetch = await fetch(`${location.protocol}//${host}/products/men?paging=${i}`, { method: 'GET' })
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             return data.data;
           });
-
-        console.log(`http://3.19.121.116/products/men?paging=${i}`);
 
         for (let j = 0; j < 2; j++) {
           const id = data_fetch[j].id;
@@ -169,7 +165,7 @@ function men() {
 
           // 塞連結進圖片裡
           const img_a = document.createElement('a');
-          img_a.href = `http://${host}/product.html?id=${id}`;
+          img_a.href = `${location.protocol}//${host}/product.html?id=${id}`;
           img_a.appendChild(pic);
 
           name_div.appendChild(name);
@@ -199,15 +195,13 @@ function accessories() {
       const host = location.host;
 
       for (let i = 0; i < 3; i++) {
-        const data_fetch = await fetch(`http://${host}/products/accessories?paging=${i}`, { method: 'GET' })
+        const data_fetch = await fetch(`${location.protocol}//${host}/products/accessories?paging=${i}`, { method: 'GET' })
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             return data.data;
           });
-
-        console.log(`http://3.19.121.116/products/accessories?paging=${i}`);
 
         for (let j = 0; j < 2; j++) {
           const id = data_fetch[j].id;
@@ -240,7 +234,7 @@ function accessories() {
 
           // 塞連結進圖片裡
           const img_a = document.createElement('a');
-          img_a.href = `http://${host}/product.html?id=${id}`;
+          img_a.href = `${location.protocol}//${host}/product.html?id=${id}`;
           img_a.appendChild(pic);
 
           name_div.appendChild(name);
@@ -273,15 +267,13 @@ function all() {
       const host = location.host;
 
       for (let i = 0; i < 3; i++) {
-        const data_fetch = await fetch(`http://${host}/products/${cat}?paging=${i}`, { method: 'GET' })
+        const data_fetch = await fetch(`${location.protocol}//${host}/products/${cat}?paging=${i}`, { method: 'GET' })
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             return data.data;
           });
-
-        console.log(`http://3.19.121.116/products/${cat}?paging=${i}`);
 
         for (let j = 0; j < 2; j++) {
           const id = data_fetch[j].id;
@@ -314,7 +306,7 @@ function all() {
 
           // 塞連結進圖片裡
           const img_a = document.createElement('a');
-          img_a.href = `https://${host}/product.html?id=${id}`;
+          img_a.href = `${location.protocol}//${host}/product.html?id=${id}`;
           img_a.appendChild(pic);
 
           name_div.appendChild(name);
@@ -345,7 +337,7 @@ function add(x) {
         cat = 'all';
       }
       for (let i = x; i < x + 3; i++) {
-        const data_fetch = await fetch(`https://${host}/products/${cat}?paging=${i}`, { method: 'GET' })
+        const data_fetch = await fetch(`${location.protocol}//${host}/products/${cat}?paging=${i}`, { method: 'GET' })
           .then((response) => {
             return response.json();
           })
@@ -353,7 +345,7 @@ function add(x) {
             return data.data;
           });
 
-        console.log(`https://${host}/products/${cat}?paging=${i}`);
+        console.log(`${location.protocol}//${host}/products/${cat}?paging=${i}`);
 
         if (data_fetch == '{"data":[]}') {
           return;
@@ -389,7 +381,7 @@ function add(x) {
 
             // 塞連結進圖片裡
             const img_a = document.createElement('a');
-            img_a.href = `https://${host}/product.html?id=${id}`;
+            img_a.href = `${location.protocol}//${host}/product.html?id=${id}`;
             img_a.appendChild(pic);
 
             name_div.appendChild(name);

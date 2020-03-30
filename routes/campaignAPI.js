@@ -1,8 +1,12 @@
 /* eslint-disable max-len */
 /* eslint-disable new-cap */
+require('dotenv').config();
 const express = require('express');
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
 const { promisify } = require('util');
 const getAsync = promisify(client.get).bind(client);
 const router = express.Router();

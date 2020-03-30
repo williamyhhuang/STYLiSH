@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  redis:
+    image: redis
+    container_name: redis
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    volumes:
+      - "./sql:/data"
+      - "./init_mysql:/docker-entrypoint-initdb.d/"
+  stylish:
+    restart: always
+    container_name: stylish
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on: 
+      - mysql
+    ports:
+      - "${STYLISH_PORT}:3001"
