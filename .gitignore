@@ -9,3 +9,5 @@ node_modules
 
 # SSL certification keys
 .well-known
+
+.env
